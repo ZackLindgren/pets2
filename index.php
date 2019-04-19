@@ -1,4 +1,6 @@
 <?php
+
+session_start();
 //Turn on error reporting
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -52,6 +54,39 @@ $f3 ->route('GET /@animal', function($f3,$params)
             $f3->error(404);
 
     }
+
+});
+
+
+//define route  order 1
+
+$f3->route('GET /order', function ()
+{
+    $view=new Template();
+    echo $view->render( 'views/form1.html');
+
+
+});
+
+//define route  order 2
+
+$f3->route('POST /order2', function ()
+{
+    $_SESSION['animal']=$_POST['animal'];
+    $view=new Template();
+    echo $view->render( 'views/form2.html');
+
+
+});
+
+//define route  order 2
+
+$f3->route('POST /results', function ()
+{
+    $_SESSION['color']=$_POST['color'];
+    $view=new Template();
+    echo $view->render( 'views/results.html');
+
 
 });
 

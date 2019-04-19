@@ -1,0 +1,12 @@
+{
+  "name": "zlindgren/it328/pets2",
+  "authors": [
+    {
+      "name": "Zack Lindgren",
+      "email": "zlindgren@mail.greenriver.edu"
+    }
+  ],
+  "require": {
+    "bcosca/fatfree-core": "dev-master"
+  }
+}

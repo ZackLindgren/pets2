@@ -19,5 +19,42 @@ $f3 ->route('GET /', function()
     echo '<a href="order">Order a Pet</a>';
 });
 
+//define a route
+
+$f3 ->route('GET /@animal', function($f3,$params)
+{
+    $animal= $params ['animal'];
+
+    switch($animal)
+    {
+        case 'dog':
+            echo "<h3> Woof!!</h3>";
+            break;
+
+        case 'chicken':
+            echo "<h3> Cluck!</h3>";
+            break;
+
+        case 'cat':
+            echo "<h3> Meow!</h3>";
+            break;
+
+
+        case 'snake':
+            echo "<h3> Hiss!!</h3>";
+            break;
+
+
+        case 'pig':
+            echo "<h3>Oink!</h3>";
+            break;
+        default:
+            $f3->error(404);
+
+    }
+
+});
+
+
 //Run fat free
 $f3 ->run();

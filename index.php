@@ -2,7 +2,7 @@
 
 session_start();
 //Turn on error reporting
-ini_set('display_errors', 1);
+ini_set('display_errors', TRUE);
 error_reporting(E_ALL);
 
 //Require the autoload file
@@ -14,6 +14,9 @@ $f3->set('colors', array('pink','green', 'blue'));
 
 // Turn on Fat-Free error reporting
 $f3->set('DEBUG', 3);
+
+// add the model
+require_once('model/validation-functions.php');
 
 //Define a default route
 $f3 ->route('GET /', function()
@@ -60,35 +63,59 @@ $f3 ->route('GET /@animal', function($f3,$params)
 
 
 //define route  order 1
-
-$f3->route('GET|POST /order', function ()
+$f3->route('GET|POST /order', function ($f3)
 {
+    // clearing from previous sessions
+    $_SESSION = array();
+
+    if (!empty($_POST['animal']))
+    {
+        $animal = $_POST['animal'];
+
+        if(validString($animal))
+        {
+            $_SESSION['animal'] = $animal;
+            $f3->reroute('/order2');
+        }
+        else
+        {
+            $f3->set("errors['animal']", "Please enter an animal.");
+        }
+    }
+
     $view=new Template();
     echo $view->render( 'views/form1.html');
-
-
 });
 
-//define route  order 2
 
-$f3->route('GET|POST /order2', function ()
+//define route  order 2
+$f3->route('GET|POST /order2', function ($f3)
 {
-    $_SESSION['animal']=$_POST['animal'];
+    if (!empty($_POST['color']))
+    {
+        $color = $_POST['color'];
+
+        if(validColor($color))
+        {
+            $_SESSION['color'] = $color;
+            $f3->reroute('/results');
+        }
+        else
+        {
+            $f3->set("errors['colors']", "Please enter a color.");
+        }
+    }
+
     $view=new Template();
     echo $view->render( 'views/form2.html');
-
-
 });
 
 //define route  order 2
 
-$f3->route('POST /results', function ()
+$f3->route('GET|POST /results', function ()
 {
-    $_SESSION['color']=$_POST['color'];
     $view=new Template();
     echo $view->render( 'views/results.html');
-
-
 });
 
 

@@ -6,16 +6,15 @@
     <title>Pet Form</title>
 </head>
 <body>
-<form method="post" action="#">
-    <label>
-        Color
-        <select name="color">
-            <repeat group="{{ @colors}}" value="{{ @colorOption}}">
-                <option> {{ @colorOption}}</option>
-            </repeat>
-        </select>
-    </label>
-    <input type="submit" value="Submit">
-</form>
+    <form method="post" action="#">
+        <label>
+            Color
+            <check if="{{isset(@errors['colors'])}}">
+                <p>{{@errors['colors']}}</p>
+            </check>
+            <input type="text" name="color">
+        </label>
+        <input type="submit" value="Submit">
+    </form>
 </body>
 </html>
